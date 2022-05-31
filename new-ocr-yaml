@@ -83,7 +83,7 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Image'
+              $ref: '#/components/schemas/image'
         required: true
       responses:
         '200':
@@ -111,7 +111,7 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Image'
+              $ref: '#/components/schemas/image'
         required: true
       responses:
         '200':
@@ -139,7 +139,7 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Image'
+              $ref: '#/components/schemas/image'
         required: true
       responses:
         '200':
@@ -167,7 +167,7 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Image'
+              $ref: '#/components/schemas/image'
         required: true
       responses:
         '200':
@@ -195,7 +195,7 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Image'
+              $ref: '#/components/schemas/image'
         required: true
       responses:
         '200':
@@ -224,7 +224,7 @@ paths:
           multipart/form-data:
             schema:
               type:
-              $ref: '#/components/schemas/Image'
+              $ref: '#/components/schemas/image'
         required: true
       responses:
         '200':
@@ -254,7 +254,7 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Image'
+              $ref: '#/components/schemas/image'
         required: true
       responses:
         '200':
@@ -286,7 +286,7 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Image'
+              $ref: '#/components/schemas/image'
         required: true
       responses:
         '200':
@@ -357,22 +357,22 @@ components:
       title: Pre_Process_Request
       description: List of images
       properties: 
-        Input:
-          $ref: '#/components/schemas/Images'
+        input:
+          $ref: '#/components/schemas/images'
     Body_binarize_image_v0_1_preprocess_binarize_post-Response:
       type: object
       title: Binarize_Image_Response
 
       properties: 
-        Output:
-          $ref: '#/components/schemas/Images'
+        output:
+          $ref: '#/components/schemas/images'
     Body_grayscale_image_v0_1_preprocess_grayscale_post-Response:
       type: object
       title: Grayscale_Image_Response
 
       properties: 
-        Output:
-          $ref: '#/components/schemas/Images'
+        output:
+          $ref: '#/components/schemas/images'
 
       
  
@@ -382,7 +382,7 @@ components:
       title: Get_Image_Colors_Response
 
       properties: 
-        Output:
+        output:
           type: array
           items:
             description: List of Images
@@ -392,7 +392,7 @@ components:
       type: object
       title: Get_Image_Font_Response
       properties: 
-        Output:
+        output:
           type: array
           items:
             description: List of Images
@@ -402,105 +402,105 @@ components:
       type: object
       title: Get_Image_Language_Response
       properties: 
-        Output:
+        output:
           type: array
           items:
             description: List of Images
-            $ref: '#/components/schemas/image-Language'
+            $ref: '#/components/schemas/imageLanguage'
 
-        # Output:
+        # output:
     Get-image-Modality-Response:
       type: object
       title: Get_image_Modality_Response
       properties: 
-        Output:
-          $ref: '#/components/schemas/Images'
+        output:
+          $ref: '#/components/schemas/images'
 
-        # Output:
+        # output:
     Get-image-Script-Response:
       type: object
       title: Get_image_Script_Response
       properties: 
-        Output:
+        output:
           $ref: '#/components/schemas/image-scripts'
-    Main-Request:
+    MainRequest:
       type: object
       title: Main_Request
       description: List of images
       properties: 
-        Input:
-          $ref: '#/components/schemas/Images'
+        input:
+          $ref: '#/components/schemas/images'
     Main-response:
       type: object
       title: Main_Response
       properties: 
-        Output:
+        output:
           $ref: '#/components/schemas/Main'
     
     Main:
-      title: Main
+      title: main
       type: object
       properties:
-        Image_name:
-          $ref: '#/components/schemas/Image'
-        Word:
+        imageName:
+          $ref: '#/components/schemas/image'
+        word:
           type: string
           description: Text presnt in the image
-    image-Language:
-      title: Image_Language
+    imageLanguage:
+      title: imageLanguage
       type: object
       properties:
-        Image_name:
-          $ref: '#/components/schemas/Image'
-        Language-Name:
+        imageName:
+          $ref: '#/components/schemas/image'
+        languageName:
           type: string
           description: Name of the Language present in the image
     image-colors:
-      title: Image_Colors
+      title: imageColors
       type: object
       properties:
-        Image_name:
-          $ref: '#/components/schemas/Image'
-        rgba-values:
+        imageName:
+          $ref: '#/components/schemas/image'
+        rgbaValues:
           type: string
           description: rgba values of the given image
-        hexa-code:
+        hexacode:
           type: string
           description: hexa-code of the given image
     image-fonts:
-      title: Image_Fonts
+      title: imageFonts
       type: object
       properties:
-        Image_name:
-          $ref: '#/components/schemas/Image'
-        Font-size:
+        imageName:
+          $ref: '#/components/schemas/image'
+        fontSize:
           type: number
           description: Font-size present in the image
-        Font-Family:
+        fontFamily:
           type: string
           description: Font-family of the given image
-        Font-Decoration:
+        fontDecoration:
           type: string
           description: Font-Decoration of the given image
     image-scripts:
-      title: Image_Scripts
+      title: imageScripts
       type: object
       properties:
-        Image_name:
-          $ref: '#/components/schemas/Image'
-        Script-Type:
+        imageName:
+          $ref: '#/components/schemas/image'
+        scriptType:
           type: string
           description: Type of the script
       
-    Images:
-      title: Images
+    images:
+      title: images
       type: array
       description: list of
       items:
-        $ref: '#/components/schemas/Image'
+        $ref: '#/components/schemas/image'
         
-    Image:
-      title: Image
+    image:
+      title: image
       type: string
       description: Image name
     Body_login_v0_1_auth_login_post:
