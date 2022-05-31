@@ -1,0 +1,580 @@
+openapi: 3.0.2
+info:
+  title: OCR API Specs
+  description: Bare Bones internal OCR API Specification
+  version: '0.1'
+paths:
+  /v0.1/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login
+      operationId: login_v0_1_auth_login_post
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Body_login_v0_1_auth_login_post'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v0.1/auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: Logout User
+      description: Endpoint for logging out the user
+      operationId: logout_user_v0_1_auth_logout_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+        - OAuth2PasswordBearer: []
+  /v0.1/users/me:
+    get:
+      tags:
+        - Auth
+      summary: Get Users
+      description: Get the details of the currently logged in user
+      operationId: get_users_v0_1_users_me_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+        - OAuth2PasswordBearer: []
+    patch:
+      tags:
+        - Auth
+      summary: Update Users
+      description: Update the user details for current user.
+      operationId: update_users_v0_1_users_me_patch
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+        - OAuth2PasswordBearer: []
+  /v0.1/preprocess/binarize:
+    post:
+      tags:
+        - Preprocess
+      summary: Binarize Image
+      description: Returns the binarized image using threshold of **0.75**
+      operationId: binarize_image_v0_1_preprocess_binarize_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Image'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Body_binarize_image_v0_1_preprocess_binarize_post-Response'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  /v0.1/preprocess/grayscale:
+    post:
+      tags:
+        - Preprocess
+      summary: Grayscale Image
+      description: Returns the grayscale image using opencv BGR2GRAY function
+      operationId: grayscale_image_v0_1_preprocess_grayscale_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Image'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Body_grayscale_image_v0_1_preprocess_grayscale_post-Response'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  /v0.1/preprocess/color:
+    post:
+      tags:
+        - Preprocess
+      summary: Get Image Colors
+      description: Detect and returns the Foreground and Background color of the image.
+      operationId: get_image_colors_v0_1_preprocess_color_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Image'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Get-image-colors-Response'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  /v0.1/preprocess/language:
+    post:
+      tags:
+        - Preprocess
+      summary: Get Image Languages
+      description: Detects and retutns the language of the text in image
+      operationId: get_image_languages_v0_1_preprocess_language_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Image'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Get-image-Language-response'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  /v0.1/preprocess/modality:
+    post:
+      tags:
+        - Preprocess
+      summary: Get Image Modalitys
+      description: Detects and retutns the modality of the text in image
+      operationId: get_image_modalitys_v0_1_preprocess_modality_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Image'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Get-image-Modality-Response'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  /v0.1/preprocess/script:
+    post:
+      tags:
+        - Preprocess
+      summary: Get Image Scripts
+      description: Detects and retutns the script of the text in image
+      operationId: get_image_scripts_v0_1_preprocess_script_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type:
+              $ref: '#/components/schemas/Image'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/Get-image-Script-Response'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  /v0.1/preprocess/font:
+    post:
+      tags:
+        - Preprocess
+      summary: Get Image Fonts
+      description: |-
+        Detects and returns all the font information for the text in the image
+        like font name, font size, bold?, etc..
+      operationId: get_image_fonts_v0_1_preprocess_font_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Image'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Get-image-Font-response'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  /v0.1/ocr:
+    post:
+      tags:
+        - Main
+      summary: Perform Ocr
+      description: |-
+        Main function that performs the OCR.
+
+        @inputs: List of uploaded images
+        @outputs: Dict with the key as the name of the image and value as ocr text
+      operationId: perform_ocr_v0_1_ocr_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Image'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Main-response'
+              
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - OAuth2PasswordBearer: []
+  /v0.1/post:
+    post:
+      tags:
+        - Postprocess
+      summary: Post Processing
+      description: This is a dummy endpoint to make space for the Postprocess group
+      operationId: post_processing_v0_1_post_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+        - OAuth2PasswordBearer: []
+  /v0.1/viz:
+    post:
+      tags:
+        - Visualization
+      summary: Visualization
+      description: This is a dummy endpoint to make space for the Visualization group
+      operationId: visualization_v0_1_viz_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+        - OAuth2PasswordBearer: []
+  /v0.1/metric:
+    post:
+      tags:
+        - Metric
+      summary: Calculate Metric
+      description: This is a dummy endpoint to make space for the Metric group
+      operationId: calculate_metric_v0_1_metric_post
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+        - OAuth2PasswordBearer: []
+components:
+  schemas:
+
+    PreProcess-Request:
+      type: object
+      title: Pre_Process_Request
+      description: List of images
+      properties: 
+        Input:
+          $ref: '#/components/schemas/Images'
+    Body_binarize_image_v0_1_preprocess_binarize_post-Response:
+      type: object
+      title: Binarize_Image_Response
+
+      properties: 
+        Output:
+          $ref: '#/components/schemas/Images'
+    Body_grayscale_image_v0_1_preprocess_grayscale_post-Response:
+      type: object
+      title: Grayscale_Image_Response
+
+      properties: 
+        Output:
+          $ref: '#/components/schemas/Images'
+
+      
+ 
+
+    Get-image-colors-Response:
+      type: object
+      title: Get_Image_Colors_Response
+
+      properties: 
+        Output:
+          type: array
+          items:
+            description: List of Images
+            $ref: '#/components/schemas/image-colors'
+  
+    Get-image-Font-response:
+      type: object
+      title: Get_Image_Font_Response
+      properties: 
+        Output:
+          type: array
+          items:
+            description: List of Images
+            $ref: '#/components/schemas/image-fonts'
+
+    Get-image-Language-response:
+      type: object
+      title: Get_Image_Language_Response
+      properties: 
+        Output:
+          type: array
+          items:
+            description: List of Images
+            $ref: '#/components/schemas/image-Language'
+
+        # Output:
+    Get-image-Modality-Response:
+      type: object
+      title: Get_image_Modality_Response
+      properties: 
+        Output:
+          $ref: '#/components/schemas/Images'
+
+        # Output:
+    Get-image-Script-Response:
+      type: object
+      title: Get_image_Script_Response
+      properties: 
+        Output:
+          $ref: '#/components/schemas/image-scripts'
+    Main-Request:
+      type: object
+      title: Main_Request
+      description: List of images
+      properties: 
+        Input:
+          $ref: '#/components/schemas/Images'
+    Main-response:
+      type: object
+      title: Main_Response
+      properties: 
+        Output:
+          $ref: '#/components/schemas/Main'
+    
+    Main:
+      title: Main
+      type: object
+      properties:
+        Image_name:
+          $ref: '#/components/schemas/Image'
+        Word:
+          type: string
+          description: Text presnt in the image
+    image-Language:
+      title: Image_Language
+      type: object
+      properties:
+        Image_name:
+          $ref: '#/components/schemas/Image'
+        Language-Name:
+          type: string
+          description: Name of the Language present in the image
+    image-colors:
+      title: Image_Colors
+      type: object
+      properties:
+        Image_name:
+          $ref: '#/components/schemas/Image'
+        rgba-values:
+          type: string
+          description: rgba values of the given image
+        hexa-code:
+          type: string
+          description: hexa-code of the given image
+    image-fonts:
+      title: Image_Fonts
+      type: object
+      properties:
+        Image_name:
+          $ref: '#/components/schemas/Image'
+        Font-size:
+          type: number
+          description: Font-size present in the image
+        Font-Family:
+          type: string
+          description: Font-family of the given image
+        Font-Decoration:
+          type: string
+          description: Font-Decoration of the given image
+    image-scripts:
+      title: Image_Scripts
+      type: object
+      properties:
+        Image_name:
+          $ref: '#/components/schemas/Image'
+        Script-Type:
+          type: string
+          description: Type of the script
+      
+    Images:
+      title: Images
+      type: array
+      description: list of
+      items:
+        $ref: '#/components/schemas/Image'
+        
+    Image:
+      title: Image
+      type: string
+      description: Image name
+    Body_login_v0_1_auth_login_post:
+      title: Body_login_v0_1_auth_login_post
+      required:
+        - username
+        - password
+      type: object
+      properties:
+        grant_type:
+          title: Grant Type
+          pattern: password
+          type: string
+        username:
+          title: Username
+          type: string
+        password:
+          title: Password
+          type: string
+        scope:
+          title: Scope
+          type: string
+          default: ''
+        client_id:
+          title: Client Id
+          type: string
+        client_secret:
+          title: Client Secret
+          type: string
+    Body_perform_ocr_v0_1_ocr_post:
+      title: Body_perform_ocr_v0_1_ocr_post
+      required:
+        - images
+      type: object
+      properties:
+        images:
+          title: Images
+          type: array
+          items:
+            type: string
+            format: binary
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    ValidationError:
+      title: ValidationError
+      required:
+        - loc
+        - msg
+        - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            type: string
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+
+  securitySchemes:
+    OAuth2PasswordBearer:
+      type: oauth2
+      flows:
+        password:
+          scopes: {}
+          tokenUrl: auth/login
